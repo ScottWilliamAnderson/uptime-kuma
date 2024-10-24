@@ -418,7 +418,7 @@ export default {
          * Initialise page
          * @returns {void}
          */
-        init() {
+        async init() {
             this.affectedMonitors = [];
             this.selectedStatusPages = [];
 
@@ -441,12 +441,16 @@ export default {
                     }],
                     weekdays: [],
                     daysOfMonth: [],
-                    timezoneOption: null,
+                    timezoneOption: await this.$root.getSocket().emit("getServerTimezone"),
                 };
             } else if (this.isEdit) {
                 this.$root.getSocket().emit("getMaintenance", this.$route.params.id, (res) => {
                     if (res.ok) {
                         this.maintenance = res.maintenance;
+
+                        if (!this.maintenance.timezoneOption) {
+                            this.maintenance.timezoneOption = await this.$root.getSocket().emit("getServerTimezone");
+                        }
 
                         this.$root.getSocket().emit("getMonitorMaintenance", this.$route.params.id, (res) => {
                             if (res.ok) {

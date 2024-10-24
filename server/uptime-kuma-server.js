@@ -394,7 +394,7 @@ class UptimeKumaServer {
             log.warn("timezone", e.message + " in process.env.TZ");
         }
 
-        let timezone = await Settings.get("serverTimezone");
+        let timezone = await Settings.getServerTimezone();
 
         // From Settings
         try {

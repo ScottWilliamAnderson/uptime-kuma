@@ -170,6 +170,14 @@ class Settings {
             Settings.cacheCleaner = null;
         }
     }
+
+    /**
+     * Retrieve the server's timezone from settings
+     * @returns {Promise<string>} Server's timezone
+     */
+    static async getServerTimezone() {
+        return await Settings.get("serverTimezone");
+    }
 }
 
 module.exports = {
